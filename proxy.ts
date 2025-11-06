@@ -6,7 +6,7 @@ export { default } from "next-auth/middleware";
 export const config = {
   matcher: ["/:path*", "/admin", "/profile", "/"],
 };
-const protectedRoutes = ["/", "/profile", "/admin"];
+const protectedRoutes = ["/profile", "/admin"];
 
 export async function proxy(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXT_AUTH_SECRET });

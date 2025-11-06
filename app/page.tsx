@@ -4,8 +4,10 @@ import { type SimplifyMedicalJargonOutput } from "@/ai/flows/simplify-medical-ja
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { HeartPulse, Download } from "lucide-react";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { processReportAction } from "./actions";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -13,6 +15,14 @@ interface ChatMessage {
 }
 
 export default function Home() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status == "unauthenticated") router.replace("/login");
+    console.log(JSON.stringify(session));
+  });
+
   const [reportData, setReportData] =
     useState<SimplifyMedicalJargonOutput | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -98,8 +108,7 @@ export default function Home() {
           </div>
         </div>
       </header>
-
-      <main className="container mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="flex-grow container mx-auto p-4 sm:p-6 lg:p-8">
         {!reportData ? (
           <div className="flex items-center justify-center h-full pt-16">
             <UploadCard
@@ -126,7 +135,6 @@ export default function Home() {
           </div>
         )}
       </main>
-
       <footer className="py-4 border-t">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
           Swasyn is an AI-powered tool and does not provide medical advice.

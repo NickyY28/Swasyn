@@ -34,6 +34,7 @@ export default function Home() {
     () => import("@/components/swasyn-ai/ChatInterface"),
     { ssr: false }
   );
+
   const handleProcessReport = (extractedText: string) => {
     if (!extractedText.trim()) {
       toast.error(

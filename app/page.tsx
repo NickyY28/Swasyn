@@ -99,7 +99,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-grow container mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="container mx-auto p-4 sm:p-6 lg:p-8">
         {!reportData ? (
           <div className="flex items-center justify-center h-full pt-16">
             <UploadCard
